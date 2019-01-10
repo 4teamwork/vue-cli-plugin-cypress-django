@@ -1,0 +1,26 @@
+{
+  "name": "@4tw/vue-cli-plugin-cypress-django",
+  "version": "0.0.1",
+  "description": "Integration testing with cypress and django",
+  "main": "index.js",
+  "author": "4teamwork",
+  "scripts": {
+    "postversion": "git push --tags && npm publish --access=public && git push",
+    "release": "yarn version"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/4teamwork/vue-cli-plugin-cypress-django"
+    }
+  ],
+  "license": "GPL2",
+  "private": false,
+  "keywords": [
+    "vue",
+    "cli",
+    "e2e",
+    "cypress",
+    "django"
+  ]
+}
