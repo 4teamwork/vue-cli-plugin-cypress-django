@@ -8,6 +8,10 @@ Integration testing with cypress and django.
 yarn add --dev @4tw/vue-cli-plugin-cypress-django
 ```
 
+## Prerequisite
+
+The plugin requires the cypress binary. https://www.npmjs.com/package/cypress
+
 ## Usage
 
 ### manage.py
