@@ -19,7 +19,7 @@ class Backend extends Process {
     this.process = managePy(
       this.options.djangopath,
       ['runserver', BACKEND_PORT],
-      { env: this.settings },
+      { env: this.settings, stdout: 'inherit' },
     );
     return this.heartbeat();
   }
