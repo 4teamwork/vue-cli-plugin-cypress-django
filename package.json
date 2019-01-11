@@ -22,5 +22,10 @@
     "e2e",
     "cypress",
     "django"
-  ]
+  ],
+  "dependencies": {
+    "@vue/cli-shared-utils": "^3.3.0",
+    "portfinder": "^1.0.20",
+    "tree-kill": "^1.2.1"
+  }
 }
