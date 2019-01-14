@@ -14,7 +14,7 @@
       "url": "https://github.com/4teamwork/vue-cli-plugin-cypress-django"
     }
   ],
-  "license": "GPL2",
+  "license": "GPL-2.0",
   "private": false,
   "keywords": [
     "vue",
