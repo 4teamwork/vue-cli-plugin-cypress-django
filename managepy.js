@@ -9,6 +9,7 @@ module.exports = function managePy(djangopath, params = [], options = {}) {
   );
 
   const pythonPathCandidates = [
+    process.env.DJANGO_PYTHON_PATH,
     'bin/python',
     '.tox/py36/bin/python',
   ];
