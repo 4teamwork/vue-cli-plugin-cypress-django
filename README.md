@@ -45,3 +45,13 @@ The headless mode runs the tests in the background. This is best for running the
 ```bash
 vue-cli-service test:django:e2e:headless --djangopath=/path/to/django/root
 ```
+
+### Environment variables
+
+Following (optional) environment variables can be made use of:
+
+- **```DJANGO_E2E_DATABASE_NAME```**: The name of the database used by django. Defaults to ```E2E_TESTING_34000```
+- **```DJANGO_PYTHON_PATH```**: The path to the python binary used by django. Defaults to ```'bin/python', '.tox/py36/bin/python', 'python'```
+- **```PORT1```**: The port used by django. Defaults to ```34000```
+- **```PORT2```**: The port used by vue. Defaults to ```35000```
+- **```PORT3```**: The port used by cypress. Defaults to ```36000```
