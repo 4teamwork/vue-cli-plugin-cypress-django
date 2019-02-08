@@ -14,7 +14,7 @@ module.exports = function managePy(djangopath, params = [], options = {}) {
     '.tox/py36/bin/python',
   ];
   const pythonPath = pythonPathCandidates
-    .find(c => fs.existsSync(path.resolve(djangopath, c))) || 'python';
+    .find(c => c && fs.existsSync(path.resolve(djangopath, c))) || 'python';
 
   return execa(
     pythonPath,
