@@ -11,7 +11,7 @@ class Cypress extends Process {
    *
    * @param {object} frontend - The frontend is needed to determine the url
    */
-  start({ headless, djangopath }) {
+  start({ headless, djangopath, gever }) {
     // Actaul cypress binary from node modules
     const cypressBin = require.resolve('cypress/bin/cypress');
     const { CYPRESS_PORT, FRONTEND_PORT, DJANGO_DATABASE_NAME } = this.settings;
@@ -23,6 +23,8 @@ class Cypress extends Process {
         '--config',
         `baseUrl=http://localhost:${FRONTEND_PORT}`,
         `--port=${CYPRESS_PORT}`,
+        '--env',
+        `GEVER=${gever}`,
       ],
       { stdio: 'inherit', env: { DJANGO_DATABASE_NAME, DJANGO_PATH: djangopath } },
     );
