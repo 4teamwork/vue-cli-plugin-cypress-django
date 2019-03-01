@@ -1,5 +1,6 @@
 const { info, execa } = require('@vue/cli-shared-utils');
 const path = require('path');
+const managePy = require('./managepy');
 
 /**
  * Represents database used during the e2e tests
@@ -38,6 +39,15 @@ class Database {
   async drop() {
     info(`Dropping database: '${this.databasename}'...`);
     return execa('./bin/e2e_teardown_db', [this.databasename], { cwd: this.djangopath });
+  }
+
+  async load(dataset) {
+    info(`Loading fixtures for ${dataset}`);
+    return managePy(
+      this.djangopath,
+      ['load_e2e_data', '--datasets', dataset],
+      { stdout: 'inherit' },
+    );
   }
 }
 
