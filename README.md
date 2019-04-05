@@ -16,7 +16,7 @@ The plugin requires the cypress binary. https://www.npmjs.com/package/cypress
 
 ### manage.py
 
-The plugin is able to interact with the django server and database. Therefore it is imporant to provide the djangopath when executing the tests. The djangopath should be the root directory of your project. The plugin assumes to have a `manage.py` to interact with the django server.
+The plugin is able to interact with the django server and database. Therefore it is important to provide the djangopath when executing the tests. The djangopath should be the root directory of your project. The plugin assumes to have a `manage.py` to interact with the django server.
 
 ### database scripts
 
@@ -47,8 +47,18 @@ vue-cli-service test:django:e2e --djangopath=/path/to/django/root
 The headless mode runs the tests in the background. This is best for running the tests in a pipeline on an integration server.
 
 ```bash
-vue-cli-service test:django:e2e:headless --djangopath=/path/to/django/root
+vue-cli-service test:django:e2e --djangopath=/path/to/django/root --headless
 ```
+
+### Using a `.env` file
+
+You may specify a mode, which loads a corresponding `.env.[mode]` file that allows you to specify environment variables.
+
+```bash
+vue-cli-service test:django:e2e --djangopath=/path/to/django/root --mode testing_e2e
+```
+
+Above example will look for a file called `.env.testing_e2e` and pick up the environment variables specified in this file.
 
 ### Environment variables
 
@@ -56,6 +66,9 @@ Following (optional) environment variables can be made use of:
 
 - **```DJANGO_E2E_DATABASE_NAME```**: The name of the database used by django. Defaults to ```E2E_TESTING_34000```
 - **```DJANGO_PYTHON_PATH```**: The path to the python binary used by django. Defaults to ```'bin/python', '.tox/py36/bin/python', 'python'```
+- **```DJANGO_CONFIGURATION```**: The name of the django settings class. Defaults to ```'TestingE2E'```
 - **```PORT1```**: The port used by django. Defaults to ```34000```
 - **```PORT2```**: The port used by vue. Defaults to ```35000```
 - **```PORT3```**: The port used by cypress. Defaults to ```36000```
+- **```HEARTBEAT_PATH```**: The frontend server will only start once the backend server is ready. A relative URL is requested repeatedly to check if the backend server is ready yet, using a HTTP HEAD method and waiting for a 200 or 302 status code. Defaults to ```/```
+- **```CYPRESS_CONFIG```**: Override Cypress options, passed as a string as `--config` when running Cypress (https://docs.cypress.io/guides/references/configuration.html#Overriding-Options). Defaults to ```''``` (```baseUrl=http://localhost:[PORT2]``` is always passed)
