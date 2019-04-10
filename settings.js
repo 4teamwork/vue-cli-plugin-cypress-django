@@ -15,11 +15,13 @@ module.exports = (async () => {
   const CYPRESS_PORT = process.env.PORT3 || CYPRESS_PORT_DEFAULT;
 
   const DJANGO_DATABASE_NAME = process.env.DJANGO_E2E_DATABASE_NAME || `E2E_TESTING_${BACKEND_PORT}`;
+  const DJANGO_CONFIGURATION = process.env.DJANGO_CONFIGURATION || 'TestingE2E';
 
   return {
     BACKEND_PORT,
     FRONTEND_PORT,
     CYPRESS_PORT,
     DJANGO_DATABASE_NAME,
+    DJANGO_CONFIGURATION,
   };
 })();

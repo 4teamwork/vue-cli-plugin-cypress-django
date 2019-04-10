@@ -5,8 +5,9 @@ const Database = require('./database');
 const Cypress = require('./processes/cypress');
 
 async function start(api, options = {}) {
-  const { BACKEND_PORT, DJANGO_DATABASE_NAME } = await settings;
+  const config = Object.assign(options, await settings, process.env);
 
+  const { BACKEND_PORT } = config;
   options.devServer.proxy = {
     '/api': {
       target: `http://localhost:${BACKEND_PORT}`,
@@ -14,22 +15,23 @@ async function start(api, options = {}) {
     '/accounts/*': {
       target: `http://localhost:${BACKEND_PORT}`,
     },
-  }
+  };
+
+  process.env.NODE_ENV = 'production';
 
   // Setup backend, frontend and database
-  const database = new Database(options.djangopath, DJANGO_DATABASE_NAME)
+  const database = new Database(config);
   await database.create();
 
-  const backend = new Backend(await settings, options);
+  const backend = new Backend(config);
   await backend.start();
 
-  const frontend = new Frontend(await settings, options);
+  const frontend = new Frontend(config);
   await frontend.start(api);
 
   // Setup cypress e2e test runner
-  const cypress = new Cypress(await settings, options);
-  const headless = options.headless || false;
-  const runner = cypress.start(Object.assign({ headless }, options));
+  const cypress = new Cypress(config);
+  const runner = cypress.start();
 
   async function teardown(code) {
     await backend.kill();

@@ -4,24 +4,37 @@ const Process = require('./Process');
 /**
  * Represents the cypress test runner.
  * @constructor
- * @param {object} settings - Settings must contain the cypress port.
+ * @param {object} config - Config must contain the cypress port.
  */
 class Cypress extends Process {
   /**
    *
-   * @param {object} frontend - The frontend is needed to determine the url
    */
-  start({ headless, djangopath, gever }) {
-    // Actaul cypress binary from node modules
+  start() {
+    // Actual cypress binary from node modules
     const cypressBin = require.resolve('cypress/bin/cypress');
-    const { CYPRESS_PORT, FRONTEND_PORT, DJANGO_DATABASE_NAME } = this.settings;
+    const {
+      CYPRESS_PORT,
+      FRONTEND_PORT,
+      DJANGO_DATABASE_NAME,
+      CYPRESS_CONFIG,
+      headless,
+      djangopath,
+      gever,
+    } = this.config;
     info(`Running E2E tests on http://localhost:${CYPRESS_PORT} ...`);
+
+    const cypressConfig = [
+      `baseUrl=http://localhost:${FRONTEND_PORT}`,
+      CYPRESS_CONFIG,
+    ].filter(Boolean).join(',');
+
     this.process = execa(
       cypressBin,
       [
         headless ? 'run' : 'open',
         '--config',
-        `baseUrl=http://localhost:${FRONTEND_PORT}`,
+        cypressConfig,
         `--port=${CYPRESS_PORT}`,
         '--env',
         `GEVER=${gever}`,

@@ -1,7 +1,6 @@
 class Process {
-  constructor(settings, options) {
-    this.settings = settings;
-    this.options = options;
+  constructor(config = {}) {
+    this.config = config;
   }
 
   async start() {

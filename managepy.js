@@ -3,10 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports = function managePy(djangopath, params = [], options = {}) {
-  const env = Object.assign(
-    options.env || {},
-    { DJANGO_CONFIGURATION: 'TestingE2E' },
-  );
+  const env = options.env || {};
 
   const pythonPathCandidates = [
     process.env.DJANGO_PYTHON_PATH,

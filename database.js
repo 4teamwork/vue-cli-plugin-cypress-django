@@ -8,19 +8,21 @@ const managePy = require('./managepy');
 let instance = null;
 
 class Database {
-  constructor(djangopath, databasename) {
+  constructor({ djangopath, DJANGO_DATABASE_NAME }) {
     if(!instance){
       instance = this;
     }
 
     this.djangopath = djangopath;
-    this.databasename = databasename;
+    this.databasename = DJANGO_DATABASE_NAME;
+
+    process.env.DJANGO_DATABASE_NAME = this.databasename;
+    process.env.djangopath = this.djangopath;
 
     return instance;
   }
 
   async create() {
-    process.env.DJANGO_DATABASE_NAME = this.databasename;
     try {
       info(`Creating database: '${this.databasename}'...`);
       await execa('./bin/e2e_setup_db', [this.databasename], { cwd: this.djangopath });
