@@ -18,21 +18,63 @@ The plugin requires the cypress binary. https://www.npmjs.com/package/cypress
 
 The plugin is able to interact with the django server and database. Therefore it is important to provide the djangopath when executing the tests. The djangopath should be the root directory of your project. The plugin assumes to have a `manage.py` to interact with the django server.
 
-### database scripts
+### database
 
-The following database script need to be provided so the plugin can properly interact with the database:
+The following database scripts need to be provided in the project root
+so the plugin can properly interact with the database:
 
 - `bin/e2e_setup_db` (create and fill database before tests are executed)
 - `bin/e2e_reload_db` (reset database for isolation)
 - `bin/e2e_teardown_db` (cleanup database)
 
-What the script are doing is up to you but the goal they should achieve is described on the list above.
+What the script are doing is up to you but the goal they should achieve is
+described on the list above.
 
 The databasename is provided during the execution as the first parameter `$1`.
 
+The database can be imported and created to interact with it.
+
+```javascript
+const Database = require('@4tw/vue-cli-plugin-cypress-django/database');
+
+const database = new Database({ djangopath, DJANGO_DATABASE_NAME });
+```
+
+**database.reset()**
+
+Resets the database.
+
+**database.drop()**
+
+Drops the database.
+
+**database.load(dataset)**
+
+Loads data during the tests. `dataset` is the name of the django-fixture.
+
+Those interactions are usually done in cypress tasks: https://docs.cypress.io/api/commands/task.html#Syntax
+so they can be called in setup and teardown hooks:
+
+```javascript
+
+module.exports = (on, config) => {
+  on('task', {
+    djangoTestSetup({ test, gever }) {
+      database.reset(),
+    },
+    loadData(dataSet) {
+      return database.load(dataSet);
+    },
+  });
+  return config;
+};
+
+```
+
+
 ### django management commands
 
-The management command `load_e2e_data` is required if specific data should be loaded on a 'per test' basis. The command should accept an optional parameter: `--datasets`. 
+The management command `load_e2e_data` is required if specific data should be loaded on a 'per test' basis. The command should accept an optional parameter: `--datasets`.
 
 ### Interactive mode
 
