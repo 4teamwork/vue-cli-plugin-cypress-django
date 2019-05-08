@@ -15,6 +15,9 @@ async function start(api, options = {}) {
     '/accounts/*': {
       target: `http://localhost:${BACKEND_PORT}`,
     },
+    '/media/*': {
+      target: `http://localhost:${BACKEND_PORT}`,
+    },
   };
 
   process.env.NODE_ENV = 'production';
