@@ -109,8 +109,8 @@ Following (optional) environment variables can be made use of:
 - **```DJANGO_E2E_DATABASE_NAME```**: The name of the database used by django. Defaults to ```E2E_TESTING_34000```
 - **```DJANGO_PYTHON_PATH```**: The path to the python binary used by django. Defaults to ```'bin/python', '.tox/py36/bin/python', 'python'```
 - **```DJANGO_CONFIGURATION```**: The name of the django settings class. Defaults to ```'TestingE2E'```
-- **```PORT1```**: The port used by django. Defaults to ```34000```
-- **```PORT2```**: The port used by vue. Defaults to ```35000```
-- **```PORT3```**: The port used by cypress. Defaults to ```36000```
+- **```BACKEND_PORT```**: The port used by django. Defaults to ```34000```
+- **```FRONTEND_PORT```**: The port used by vue. Defaults to ```35000```
+- **```CYPRESS_PORT```**: The port used by cypress. Defaults to ```36000```
 - **```HEARTBEAT_PATH```**: The frontend server will only start once the backend server is ready. A relative URL is requested repeatedly to check if the backend server is ready yet, using a HTTP HEAD method and waiting for a 200 or 302 status code. Defaults to ```/```
 - **```CYPRESS_CONFIG```**: Override Cypress options, passed as a string as `--config` when running Cypress (https://docs.cypress.io/guides/references/configuration.html#Overriding-Options). Defaults to ```''``` (```baseUrl=http://localhost:[PORT2]``` is always passed)
