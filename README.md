@@ -53,15 +53,23 @@ Drops the database.
 Loads data during the tests. `dataset` is the name of the django-fixture.
 
 Those interactions are usually done in cypress tasks: https://docs.cypress.io/api/commands/task.html#Syntax
-so they can be called in setup and teardown hooks:
+so they can be called in setup and teardown hooks. Please note that this example does more than just db setup, but also calls hooks on the backend to reset the state (e.g. for media files):
 
 ```javascript
 
 module.exports = (on, config) => {
   on('task', {
-    djangoTestSetup({ test, gever }) {
-      database.reset(),
+    djangoTestSetup(test) {
+      return Promise.all([
+        database.reset(),
+        apiPostRequest('/api/e2e/testsetup', { test }),
+      ]);
     },
+
+    djangoTestTeardown(test) {
+      return apiPostRequest('/api/e2e/testteardown', { test });
+    },
+
     loadData(dataSet) {
       return database.load(dataSet);
     },
@@ -69,6 +77,26 @@ module.exports = (on, config) => {
   return config;
 };
 
+```
+
+These tasks can be called automatically, wrapping each task in your `support/index.js` file:
+
+```
+function buildTestName(context) {
+  const { currentTest } = context;
+  const { parent } = currentTest;
+  return `${parent.title}/${currentTest.title}`;
+}
+
+before(() => { window.chai.config.truncateThreshold = 0; });
+
+beforeEach(function beforeEach() {
+  return cy.task('djangoTestSetup', { test: buildTestName(this) });
+});
+
+afterEach(function afterEach() {
+  return cy.task('djangoTestTeardown', buildTestName(this));
+});
 ```
 
 
@@ -114,3 +142,54 @@ Following (optional) environment variables can be made use of:
 - **```CYPRESS_PORT```**: The port used by cypress. Defaults to ```36000```
 - **```HEARTBEAT_PATH```**: The frontend server will only start once the backend server is ready. A relative URL is requested repeatedly to check if the backend server is ready yet, using a HTTP HEAD method and waiting for a 200 or 302 status code. Defaults to ```/```
 - **```CYPRESS_CONFIG```**: Override Cypress options, passed as a string as `--config` when running Cypress (https://docs.cypress.io/guides/references/configuration.html#Overriding-Options). Defaults to ```''``` (```baseUrl=http://localhost:[PORT2]``` is always passed)
+
+
+### Django configuration
+
+## Settings
+
+Following settings are required for proper integration of the database and logging.
+
+```
+    ALLOWED_HOSTS = ["*"]
+
+    @property
+    def DATABASES(self):
+        config = super().DATABASES
+        config["default"]["NAME"] = os.environ["DJANGO_DATABASE_NAME"]
+        return config
+
+    @property
+    def LOGGING(self):
+        return {
+            'version': 1,
+            'disable_existing_loggers': False,
+            'handlers': {
+                'console': {
+                    'level': 'INFO',
+                    'class': 'logging.StreamHandler',
+                    'stream': sys.stdout,
+                },
+                'file': {
+                    'level': 'INFO',
+                    'class': 'logging.FileHandler',
+                    'filename': os.path.join(self.BASE_DIR, 'log/e2e.log'),
+        },
+            },
+            'loggers': {
+                '': {
+                    'level': 'INFO',
+                    'handlers': ['console', 'file'],
+                },
+            },
+        }
+```
+
+# URLs
+
+Only URLs starting with `api`, `accounts` and `media` are proxied to the django backend.
+An easy fix for this is to wrap your urlpatterns around a prefix (e.g. `urlpatterns = [url("api/", include(urlpatterns))]`)
+
+# Login
+
+For simple integration of a login, refer to the RIS project (`TestingLoginView`).
