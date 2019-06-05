@@ -18,7 +18,7 @@ class Backend extends Process {
     info(`Starting backend server on http://localhost:${BACKEND_PORT}...`);
     this.process = managePy(
       djangopath,
-      ['runserver', BACKEND_PORT],
+      ['runserver', '--nothreading', BACKEND_PORT],
       { env: this.config, stdout: 'inherit' },
     );
     return this.heartbeat();
