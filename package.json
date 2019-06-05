@@ -1,6 +1,6 @@
 {
   "name": "@4tw/vue-cli-plugin-cypress-django",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Integration testing with cypress and django",
   "main": "index.js",
   "author": "4teamwork",
