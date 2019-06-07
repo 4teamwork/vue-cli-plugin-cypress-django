@@ -109,6 +109,7 @@ Following (optional) environment variables can be made use of:
 - **```DJANGO_E2E_DATABASE_NAME```**: The name of the database used by django. Defaults to ```E2E_TESTING_34000```
 - **```DJANGO_PYTHON_PATH```**: The path to the python binary used by django. Defaults to ```'bin/python', '.tox/py36/bin/python', 'python'```
 - **```DJANGO_CONFIGURATION```**: The name of the django settings class. Defaults to ```'TestingE2E'```
+- **```DJANGO_MEDIA_ROOT```**: Optional: path to the django media root. Defaults to ```null```.
 - **```BACKEND_PORT```**: The port used by django. Defaults to ```34000```
 - **```FRONTEND_PORT```**: The port used by vue. Defaults to ```35000```
 - **```CYPRESS_PORT```**: The port used by cypress. Defaults to ```36000```
