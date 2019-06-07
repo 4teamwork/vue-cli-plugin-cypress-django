@@ -16,8 +16,10 @@ module.exports = (async () => {
 
   const DJANGO_DATABASE_NAME = process.env.DJANGO_E2E_DATABASE_NAME || `E2E_TESTING_${BACKEND_PORT}`;
   const DJANGO_CONFIGURATION = process.env.DJANGO_CONFIGURATION || 'TestingE2E';
+  const DJANGO_MEDIA_ROOT = process.env.DJANGO_MEDIA_ROOT || null;
 
   return {
+    ...DJANGO_MEDIA_ROOT && { DJANGO_MEDIA_ROOT },
     BACKEND_PORT,
     FRONTEND_PORT,
     CYPRESS_PORT,
