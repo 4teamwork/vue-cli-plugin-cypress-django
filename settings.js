@@ -14,7 +14,7 @@ module.exports = (async () => {
   const FRONTEND_PORT = process.env.FRONTEND_PORT || FRONTEND_PORT_DEFAULT;
   const CYPRESS_PORT = process.env.CYPRESS_PORT || CYPRESS_PORT_DEFAULT;
 
-  const DJANGO_DATABASE_NAME = process.env.DJANGO_E2E_DATABASE_NAME || `E2E_TESTING_${BACKEND_PORT}`;
+  const DJANGO_DATABASE_NAME = process.env.DJANGO_E2E_DATABASE_NAME || `e2e_testing_${BACKEND_PORT}`;
   const DJANGO_CONFIGURATION = process.env.DJANGO_CONFIGURATION || 'TestingE2E';
   const DJANGO_MEDIA_ROOT = process.env.DJANGO_MEDIA_ROOT || null;
 
