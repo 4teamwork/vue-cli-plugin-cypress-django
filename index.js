@@ -10,6 +10,7 @@ module.exports = (api, options) => {
         '--headless': 'Run in headless mode',
         '--mode': 'Loads a corresponding .env.[mode] file',
         '--gever': 'Use a real GEVER backend',
+        '--spec': 'Specify which test file(s) to run instead of running all tests'
       },
     },
     async (args) => { await start(api, Object.assign(options, args)); }

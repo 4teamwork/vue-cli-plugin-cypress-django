@@ -94,6 +94,14 @@ The headless mode runs the tests in the background. This is best for running the
 vue-cli-service test:django:e2e --djangopath=/path/to/django/root --headless
 ```
 
+### Specifying test files to run
+
+If you want to run only selected test file(s) in headless mode instead of running all tests, specify the path of the file using `--spec`. This is then passed to Cypress (see https://docs.cypress.io/guides/guides/command-line.html#cypress-run-spec-lt-spec-gt).   
+
+```bash
+vue-cli-service test:django:e2e --headless --spec=tests/e2e/specs/some.spec.js
+```
+
 ### Using a `.env` file
 
 You may specify a mode, which loads a corresponding `.env.[mode]` file that allows you to specify environment variables.
