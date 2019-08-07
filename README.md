@@ -60,7 +60,7 @@ so they can be called in setup and teardown hooks:
 module.exports = (on, config) => {
   on('task', {
     djangoTestSetup({ test, gever }) {
-      database.reset(),
+      database.reset();
     },
     loadData(dataSet) {
       return database.load(dataSet);
