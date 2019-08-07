@@ -60,7 +60,7 @@ so they can be called in setup and teardown hooks:
 module.exports = (on, config) => {
   on('task', {
     djangoTestSetup({ test, gever }) {
-      database.reset(),
+      database.reset();
     },
     loadData(dataSet) {
       return database.load(dataSet);
@@ -76,6 +76,8 @@ module.exports = (on, config) => {
 
 The management command `load_e2e_data` is required if specific data should be loaded on a 'per test' basis. The command should accept an optional parameter: `--datasets`.
 
+The command has access to the `BACKEND_PORT` (the port on which the server is currently running). Example: `os.environ.get("BACKEND_PORT", 8000)`.
+
 ### Interactive mode
 
 The interactive mode enables you to run the e2e tests in the cypress electron app. This is best for development because you have hot reload when the production or test code is updated. You are also able to interact with the application after the tests are done.
@@ -90,6 +92,14 @@ The headless mode runs the tests in the background. This is best for running the
 
 ```bash
 vue-cli-service test:django:e2e --djangopath=/path/to/django/root --headless
+```
+
+### Specifying test files to run
+
+If you want to run only selected test file(s) in headless mode instead of running all tests, specify the path of the file using `--spec`. This is then passed to Cypress (see https://docs.cypress.io/guides/guides/command-line.html#cypress-run-spec-lt-spec-gt).   
+
+```bash
+vue-cli-service test:django:e2e --headless --spec=tests/e2e/specs/some.spec.js
 ```
 
 ### Using a `.env` file
