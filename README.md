@@ -76,6 +76,8 @@ module.exports = (on, config) => {
 
 The management command `load_e2e_data` is required if specific data should be loaded on a 'per test' basis. The command should accept an optional parameter: `--datasets`.
 
+The command has access to the `BACKEND_PORT` (the port on which the server is currently running). Example: `os.environ.get("BACKEND_PORT", 8000)`.
+
 ### Interactive mode
 
 The interactive mode enables you to run the e2e tests in the cypress electron app. This is best for development because you have hot reload when the production or test code is updated. You are also able to interact with the application after the tests are done.
