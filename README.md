@@ -112,6 +112,16 @@ vue-cli-service test:django:e2e --djangopath=/path/to/django/root --mode testing
 
 Above example will look for a file called `.env.testing_e2e` and pick up the environment variables specified in this file.
 
+### Without runserver
+
+By default, the backend server is started using Django's ``python manage.py runserver`` command.
+
+If you want to prevent this and run the tests against a backend which is already running (e.g. started using uwsgi), you can set ``--runserver=false``. In this case you need to explicitly pass the port of the backend server using the environment variable ``BACKEND_PORT``.
+
+```bash
+vue-cli-service test:django:e2e --djangopath=/path/to/django/root --runserver=false
+```
+
 ### Environment variables
 
 Following (optional) environment variables can be made use of:
