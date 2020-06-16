@@ -3,6 +3,7 @@ const Backend = require('./processes/backend');
 const Frontend = require('./processes/frontend');
 const Database = require('./database');
 const Cypress = require('./processes/cypress');
+const { info } = require('@vue/cli-shared-utils');
 
 async function start(api, options = {}) {
   const config = Object.assign(options, await settings, process.env);
@@ -26,8 +27,13 @@ async function start(api, options = {}) {
   const database = new Database(config);
   await database.create();
 
-  const backend = new Backend(config);
-  await backend.start();
+  const runserver = config['runserver']
+  if (runserver === true) {
+    const backend = new Backend(config);
+    await backend.start();
+  } else {
+    info('Not starting backend server (assuming it is already running)...')
+  }
 
   const frontend = new Frontend(config);
   await frontend.start(api);
@@ -37,7 +43,9 @@ async function start(api, options = {}) {
   const runner = cypress.start();
 
   async function teardown(code) {
-    await backend.kill();
+    if (runserver === true) {
+      await backend.kill();
+    }
     await database.drop();
     process.exit(code);
   }
