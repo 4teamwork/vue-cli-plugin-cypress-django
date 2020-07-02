@@ -22,6 +22,7 @@ class Cypress extends Process {
       spec,
       headless,
       djangopath,
+      quiet,
     } = this.config;
     info(`Running E2E tests on http://localhost:${CYPRESS_PORT} ...`);
 
@@ -39,7 +40,8 @@ class Cypress extends Process {
         `--port=${CYPRESS_PORT}`,
         '--env',
         `GEVER_PORT=${GEVER_PORT}`,
-        ...(spec ? ['--spec', spec] : [])
+        ...(spec ? ['--spec', spec] : []),
+        ...(quiet ? ['--quiet', quiet] : []),
       ],
       { stdio: 'inherit', env: { DJANGO_DATABASE_NAME, DJANGO_PATH: djangopath } },
     );
