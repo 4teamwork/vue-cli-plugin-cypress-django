@@ -28,8 +28,9 @@ async function start(api, options = {}) {
   await database.create();
 
   const runserver = config['runserver']
+  let backend
   if (runserver === true) {
-    const backend = new Backend(config);
+    backend = new Backend(config);
     await backend.start();
   } else {
     info('Not starting backend server (assuming it is already running)...')
