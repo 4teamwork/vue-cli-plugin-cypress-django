@@ -1,7 +1,8 @@
 const start = require('./start');
 
 const defaults = {
-  'runserver': true,
+  runserver: true,
+  quiet: true,
 }
 
 module.exports = (api, options) => {
@@ -15,7 +16,8 @@ module.exports = (api, options) => {
         '--mode': 'Loads a corresponding .env.[mode] file',
         '--gever': 'Use a real GEVER backend',
         '--spec': 'Specify which test file(s) to run instead of running all tests',
-        '--runserver': `Also start the backend (with Django's runserver) (default: ${defaults["runserver"]})`
+        '--runserver': `Also start the backend (with Django's runserver) (default: ${defaults.runserver})`,
+        '--quiet': `Do not output summary of tests (default: ${defaults.quiet})`
       },
     },
     async (args) => {
