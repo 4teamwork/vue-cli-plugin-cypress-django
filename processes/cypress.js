@@ -41,7 +41,7 @@ class Cypress extends Process {
         '--env',
         `GEVER_PORT=${GEVER_PORT}`,
         ...(spec ? ['--spec', spec] : []),
-        ...(quiet ? ['--quiet', quiet] : []),
+        ...(headless && quiet ? ['--quiet', quiet] : []),
       ],
       { stdio: 'inherit', env: { DJANGO_DATABASE_NAME, DJANGO_PATH: djangopath } },
     );
