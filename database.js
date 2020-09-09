@@ -8,7 +8,7 @@ const managePy = require('./managepy');
 let instance = null;
 
 class Database {
-  constructor({ djangopath, DJANGO_DATABASE_NAME, BACKEND_PORT }) {
+  constructor({ djangopath, DJANGO_DATABASE_NAME, BACKEND_PORT, DJANGO_CONFIGURATION }) {
     if(!instance){
       instance = this;
     }
@@ -16,10 +16,12 @@ class Database {
     this.djangopath = djangopath;
     this.databasename = DJANGO_DATABASE_NAME;
     this.backend_port = BACKEND_PORT;
+    this.django_configuration = DJANGO_CONFIGURATION
 
     process.env.DJANGO_DATABASE_NAME = this.databasename;
     process.env.djangopath = this.djangopath;
     process.env.BACKEND_PORT = this.backend_port;
+    process.env.DJANGO_CONFIGURATION = this.django_configuration;
 
     return instance;
   }
@@ -50,7 +52,13 @@ class Database {
     return managePy(
       this.djangopath,
       ['load_e2e_data', '--datasets', dataset],
-      { stdout: 'inherit', env: { BACKEND_PORT: this.backend_port } },
+      {
+        stdout: 'inherit',
+        env: {
+          BACKEND_PORT: this.backend_port,
+          DJANGO_CONFIGURATION: this.django_configuration,
+        },
+      },
     );
   }
 }
