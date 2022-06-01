@@ -17,7 +17,8 @@ module.exports = (api, options) => {
         '--gever': 'Use a real GEVER backend',
         '--spec': 'Specify which test file(s) to run instead of running all tests',
         '--runserver': `Also start the backend (with Django's runserver) (default: ${defaults.runserver})`,
-        '--quiet': `Do not output summary of tests (default: ${defaults.quiet})`
+        '--quiet': `Do not output summary of tests (default: ${defaults.quiet})`,
+        '--record': `Pass test results to Cypress dashboard (use env variables CYPRESS_RECORD_KEY and CYPRESS_PROJECT_ID)`
       },
     },
     async (args) => {
