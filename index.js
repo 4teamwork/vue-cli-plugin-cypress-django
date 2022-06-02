@@ -18,7 +18,8 @@ module.exports = (api, options) => {
         '--spec': 'Specify which test file(s) to run instead of running all tests',
         '--runserver': `Also start the backend (with Django's runserver) (default: ${defaults.runserver})`,
         '--quiet': `Do not output summary of tests (default: ${defaults.quiet})`,
-        '--record': `Pass test results to Cypress dashboard (use env variables CYPRESS_RECORD_KEY and CYPRESS_PROJECT_ID)`
+        '--record': `Pass test results to Cypress dashboard (use env variables CYPRESS_RECORD_KEY and CYPRESS_PROJECT_ID)`,
+        '--browser': `Indicate on which browser tests should be run`
       },
     },
     async (args) => {
