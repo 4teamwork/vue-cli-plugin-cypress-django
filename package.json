@@ -24,7 +24,7 @@
     "django"
   ],
   "dependencies": {
-    "@vue/cli-shared-utils": "^4.4.6",
+    "@vue/cli-shared-utils": "^5.0.8",
     "portfinder": "^1.0.26",
     "tree-kill": "^1.2.2"
   },
