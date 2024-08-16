@@ -1,5 +1,6 @@
 const { info, execa } = require('@vue/cli-shared-utils');
 const Process = require('./Process');
+const path = require('path');
 
 /**
  * Represents the cypress test runner.
@@ -12,7 +13,7 @@ class Cypress extends Process {
    */
   start() {
     // Actual cypress binary from node modules
-    const cypressBin = require.resolve('cypress/bin/cypress');
+    const cypressBin = path.join(require.resolve('cypress'), '..', 'bin/cypress');
     const {
       CYPRESS_PORT,
       FRONTEND_PORT,
